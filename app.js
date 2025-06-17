@@ -9,6 +9,9 @@ app.use(express.static('dist'))
 app.get('/health', (req, res) => {
   //eslint-disable-next-line no-constant-condition
   res.send('ok')
+
+  // eslint-disable-next-line no-console
+  console.log("testing pipeline")
 })
 
 app.listen(PORT, () => {
