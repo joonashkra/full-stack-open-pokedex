@@ -1,4 +1,4 @@
-name: Hello World!
+name: Deployment pipeline
 
 on:
   push:
@@ -46,7 +46,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Deploy to Render
-        uses: glarivie/render-deploy-service-action@v1.0.5
+        uses: sws2apps/render-deployment@main
         with:
           serviceId: ${{ secrets.RENDER_SERVICE_ID }}
           apiKey: ${{ secrets.RENDER_API_KEY }}
+          multipleDeployment: false
