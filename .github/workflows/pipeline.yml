@@ -56,13 +56,12 @@ jobs:
           service_id: ${{ secrets.RENDER_SERVICE_ID }}
           api_key: ${{ secrets.RENDER_API_KEY }}
   tag_release:
-    if: ${{ !contains(github.event.head_commit.message, '#skip')  }}
+    if: ${{ github.event_name == 'push' && !contains(github.event.head_commit.message, '#skip')  }}
     needs: [build_and_test, e2e_tests, render_deploy]
     runs-on: ubuntu-latest
     steps:
       - name: Bump version and push tag
-        if: ${{ github.event_name == 'push' }}
-        uses: anothrNick/github-tag-action@v1
+        uses: anothrNick/github-tag-action@1.73.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
