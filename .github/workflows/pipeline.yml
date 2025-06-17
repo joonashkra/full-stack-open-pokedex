@@ -46,7 +46,7 @@ jobs:
         path: playwright-report/
         retention-days: 30
   render_deploy:
-    if: ${{ github.event_name == 'push' }}
+    if: ${{ github.event_name == 'push' && !contains(github.event.head_commit.message, '#skip') }}
     needs: [build_and_test, e2e_tests]
     runs-on: ubuntu-latest
     steps:
@@ -56,6 +56,7 @@ jobs:
           service_id: ${{ secrets.RENDER_SERVICE_ID }}
           api_key: ${{ secrets.RENDER_API_KEY }}
   tag_release:
+    if: ${{ !contains(github.event.head_commit.message, '#skip')  }}
     needs: [build_and_test, e2e_tests, render_deploy]
     runs-on: ubuntu-latest
     steps:
