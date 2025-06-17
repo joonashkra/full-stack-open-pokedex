@@ -46,6 +46,7 @@ jobs:
         path: playwright-report/
         retention-days: 30
   render_deploy:
+    if: ${{ github.event_name == 'push' }}
     needs: [build_and_test, e2e_tests]
     runs-on: ubuntu-latest
     steps:
