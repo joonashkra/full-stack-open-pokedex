@@ -46,10 +46,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Deploy to Render
-        uses: bounceapp/render-action@0.12.0
+        uses: johnbeynon/render-deploy-action@v0.0.8
         with:
-          render-token: ${{ secrets.RENDER_API_KEY }}
           service-id: ${{ secrets.RENDER_SERVICE_ID }}
-          retries: 20
-          wait: 16000
-          sleep: 30000
+          api-key: ${{ secrets.RENDER_API_KEY }}
+          wait-for-success: true
