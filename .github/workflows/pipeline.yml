@@ -45,14 +45,9 @@ jobs:
     needs: [build_and_test, e2e_tests]
     runs-on: ubuntu-latest
     steps:
-      - name: Debug Render Inputs
-        run: |
-          echo "Service ID: ${{ secrets.RENDER_SERVICE_ID }}"
-          echo "API Key: ${{ secrets.RENDER_API_KEY }}"
-          echo "Multiple Deployment: false"
       - name: Deploy to Render
         uses: sws2apps/render-deployment@main
         with:
-          serviceId: ${{ secrets.RENDER_SERVICE_ID }}
-          apiKey: ${{ secrets.RENDER_API_KEY }}
+          serviceId: ${{ toJson(secrets.RENDER_SERVICE_ID) }}
+          apiKey: ${{ toJson(secrets.RENDER_API_KEY) }}
           multipleDeployment: false
