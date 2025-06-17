@@ -46,8 +46,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Deploy to Render
-        uses: sws2apps/render-deployment@main
+        uses: bounceapp/render-action@0.12.0
         with:
-          serviceId: ${{ toJson(secrets.RENDER_SERVICE_ID) }}
-          apiKey: ${{ toJson(secrets.RENDER_API_KEY) }}
-          multipleDeployment: false
+          render-token: ${{ secrets.RENDER_API_KEY }}
+          service-id: ${{ secrets.RENDER_SERVICE_ID }}
+          retries: 20
+          wait: 16000
+          sleep: 30000
