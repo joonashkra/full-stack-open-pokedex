@@ -60,6 +60,12 @@ jobs:
     needs: [build_and_test, e2e_tests, render_deploy]
     runs-on: ubuntu-latest
     steps:
+      - name: Install Git in container
+        run: |
+          apk update
+          apk add git
+          # one time fix to avoid permission problems later on
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
       - name: Bump version and push tag
         uses: anothrNick/github-tag-action@1.73.0
         env:
