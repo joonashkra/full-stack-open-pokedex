@@ -63,6 +63,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install git
+          git init
       - name: Bump version and push tag
         uses: anothrNick/github-tag-action@1.73.0
         env:
