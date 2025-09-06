@@ -25,7 +25,7 @@ jobs:
         run: npm run build
       - name: Notify Discord on failure
         if: ${{ failure() }}
-        uses: tsickert/discord-webhook@v5
+        uses: tsickert/discord-webhook@v7.0.0
         with:
           webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
           content: "Build failed for ${{ github.repository }} on commit ${{ github.sha }} (<${{ github.event.compare }}|compare>)"
@@ -64,7 +64,7 @@ jobs:
           api_key: ${{ secrets.RENDER_API_KEY }}
       - name: Notify Discord on successful deployment
         if: ${{ success() }}
-        uses: tsickert/discord-webhook@v5
+        uses: tsickert/discord-webhook@v7.0.0
         with:
           webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
           content: "New version deployed for ${{ github.repository }}! Commit: ${{ github.sha }}"
