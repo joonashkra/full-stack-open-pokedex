@@ -23,6 +23,12 @@ jobs:
         run: npm run eslint
       - name: Build
         run: npm run build
+      - name: Notify Discord on failure
+        if: ${{ failure() }}
+        uses: rjstone/discord-webhook-notify@v2
+        with:
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          text: "Build failed for ${{ github.repository }} on commit ${{ github.sha }} (<${{ github.event.compare }}|compare>)"
       - name: Test
         run: npm run test
   e2e_tests:
@@ -55,6 +61,12 @@ jobs:
         with:
           service_id: ${{ secrets.RENDER_SERVICE_ID }}
           api_key: ${{ secrets.RENDER_API_KEY }}
+      - name: Notify Discord on successful deployment
+        if: ${{ success() }}
+        uses: rjstone/discord-webhook-notify@v2
+        with:
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          text: "New version deployed for ${{ github.repository }}! Commit: ${{ github.sha }}"
   tag_release:
     if: ${{ github.event_name == 'push' && !contains(github.event.head_commit.message, '#skip')  }}
     needs: [build_and_test, e2e_tests, render_deploy]
